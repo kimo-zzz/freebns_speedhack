@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"无描述"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>bsengine_Shipping.dll+1CAD218</Address>
+      <Offsets>
+        <Offset>90</Offset>
+        <Offset>1F0</Offset>
+        <Offset>40</Offset>
+        <Offset>0</Offset>
+        <Offset>3BC</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"自动汇编脚本"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push ebx
+mov ebx,[bsengine_Shipping.dll+1CAD218]
+mov ebx,[ebx+3BC]
+mov ebx,[ebx]
+mov ebx,[ebx+40]
+mov ebx,[ebx+1F0]
+test ecx,ebx
+je originalcode
+pop ebx
+jmp bsengine_Shipping.dll+5467A6
+
+originalcode:
+pop ebx
+mulss xmm0,[esp+3C]
+
+exit:
+jmp returnhere
+
+"bsengine_Shipping.dll"+5467A0:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"bsengine_Shipping.dll"+5467A0:
+mulss xmm0,[esp+3C]
+//Alt: db F3 0F 59 44 24 3C
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
